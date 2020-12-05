@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const connectDatabase = require('./db/connect-disconnect-database').connectDatabase
+const apiShortUrlRouter = require('./routers/api/short-url')
 const mainRouter = require('./routers/main')
 
 // Connect to database.
@@ -20,6 +21,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Routers
+app.use(apiShortUrlRouter)
 app.use(mainRouter)
 
 // Port to listen on.
