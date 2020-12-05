@@ -8,9 +8,15 @@ router.post('/api/short-url', async(req, res) => {
         const longUrl = req.body.longUrl
         if (!validUrl.isUri(longUrl)) return res.status(400).send({ error: 'Invalid url!' })
 
+        let status = 200
         let url = await Url.findOne({ longUrl })
-        if (!url) url = await Url.create({ longUrl })
-        res.status(201).send({ shortUrl: `${req.headers.host}/${url.shortUrlCode}` })
+
+        if (!url) { 
+            url = await Url.create({ longUrl })
+            status = 201
+        }
+
+        res.status(status).send({ shortUrl: `${req.headers.host}/${url.shortUrlCode}` })
     } catch (e) {
         console.error('[ShortURL Router] An error occurred on CREATE /api/short-url.')
         console.error(e)
@@ -23,7 +29,7 @@ router.get('/api/short-url/:shortUrlCode', async(req, res) => {
         const shortUrlCode = req.params.shortUrlCode
         const url = await Url.findOne({ shortUrlCode })
         if (!url) return res.status(400).send({ error: 'Invalid url!' })
-        res.status(301).send({ shortUrl: `${req.headers.host}/${url.shortUrlCode}` })
+        res.status(301).send({ longUrl: url.longUrl })
     } catch (e) {
         console.error(`[ShortURL Router] An error occurred on GET /api/${shortUrlCode}.`)
         console.error(e)
