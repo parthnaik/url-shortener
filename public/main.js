@@ -26,7 +26,7 @@ const initializeShortenButtonSubmitFormListener = () => {
             const jsonRes = await res.json()  
             
             if (res.ok) {
-                document.querySelector('#shortened-url').innerHTML = `<p>Your shortened URL is: <a href="${jsonRes.shortUrl}">${jsonRes.shortUrl}</a></p>`
+                document.querySelector('#shortened-url').innerHTML = `<p>Your shortened URL is: <a href="//${jsonRes.shortUrl}">${jsonRes.shortUrl}</a></p>`
                 form.reset()
             } else {
                 document.querySelector('#shortened-url').innerHTML = `<p>Please enter a valid URL!</p>`
