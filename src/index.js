@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const connectDatabase = require('./db/connect-disconnect-database').connectDatabase
+const mainRouter = require('./routers/main')
 
 // Connect to database.
 connectDatabase(process.env.MONGODB_URL)
@@ -17,6 +18,9 @@ app.use(express.static(publicDirectoryPath))
 // Setup input format for router requests.
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+// Routers
+app.use(mainRouter)
 
 // Port to listen on.
 const port = process.env.PORT
