@@ -1,10 +1,11 @@
+const path = require('path')
 const express = require('express')
 const router = new express.Router()
 const Url = require('../models/url')
 
 router.get('/', async(req, res) => {
     try {
-        
+        res.sendFile(path.join(__dirname, '../../public/main.html'))
     } catch (e) {
         console.error('[Main Router] An error occurred on GET /.')
         console.error(e)
